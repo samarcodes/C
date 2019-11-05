@@ -48,18 +48,23 @@ int main()
             case '1':
                 fseek(fp,0,SEEK_END);
                 another='y';
+                num=0;
 
                 while(check(another))
                 {
                     printf("\nEnter id,name & basic salary\n");
                     scanf("%d%s%f",&e.id,e.name,&e.basic_salary);
-                    num=fwrite(&e,recsize,1,fp);
-                    if(num==1)
-                        printf("Record Added Successfully");
+                    fwrite(&e,recsize,1,fp);
+                    num++;  //hold no of records
                     fflush(stdin);
-                    printf("\n\nAdd Another Record(Y/N) : ");
+                    printf("\nAdd Another Record(Y/N) : ");
                     another=getche();
                 }
+                if(num==1)
+                    printf("\n1 Record Added Successfully");
+                else
+                    printf("\n%d Records Added Successfully",num);
+                getch();
                 break;
 
             case '2':
@@ -149,17 +154,21 @@ int main()
                     scanf("%d",&emp_id);
 
                     ft=fopen("TEMP.dat","wb");
+                    if(ft==NULL)
+                    {
+                        puts("Cannot Open File...");
+                        exit(2);
+                    }
 
                     rewind(fp);
                     while(fread(&e,recsize,1,fp)==1)
                     {
-                        flag=1;
                         if(e.id!=emp_id)
                         {
+                            flag=1;
                             fwrite(&e,recsize,1,ft);
                         }
                     }
-
                     fclose(fp);
                     fclose(ft);
                     remove("EMP.dat");
