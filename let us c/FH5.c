@@ -31,19 +31,6 @@ int main()
         exit(3);
     }
 
-    while(1)
-    {
-        if(fgets(s1,50,fs1)!=NULL || fgets(s2,50,fs2)!=NULL)
-        {
-            s1[strlen(s1)]='\0';
-            s2[strlen(s2)]='\0';
-            fputs(s1,ft);
-            fputs(s2,ft);
-            fputs("\n",ft);
-        }
-        else
-            break;
-    }
     fclose(fs1);
     fclose(fs2);
     fclose(ft);
